@@ -52,14 +52,14 @@ export const metadata: Metadata = {
     title: `${site.name} – Energieffektivisering & ROT-renovering i ${site.city}`,
     description:
       `Vi förlänger fastigheters livslängd och sänker energiförbrukningen. Energieffektiv ROT-renovering i ${site.city} – med ROT-avdrag.`,
-    images: [{ url: "/images/og-default.svg", width: 1200, height: 630, alt: site.name }],
+    images: [{ url: "/images/og-default.png", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} – Energieffektivisering & ROT-renovering i ${site.city}`,
     description:
       `Vi förlänger fastigheters livslängd och sänker energiförbrukningen. Energieffektiv ROT-renovering i ${site.city}.`,
-    images: ["/images/og-default.svg"],
+    images: ["/images/og-default.png"],
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },

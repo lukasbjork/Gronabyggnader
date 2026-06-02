@@ -19,7 +19,7 @@ const localBusinessLd = {
   url: site.url,
   telephone: site.phone,
   email: site.email,
-  image: `${site.url}/images/og-default.svg`,
+  image: `${site.url}/images/og-default.png`,
   logo: `${site.url}/images/logo.svg`,
   priceRange: site.priceRange,
   address: {
