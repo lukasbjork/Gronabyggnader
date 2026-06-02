@@ -1,0 +1,30 @@
+# Netlify-konfiguration för statisk Next.js-export.
+# Repot kopplas i Netlify (Add new site -> Import an existing project -> GitHub ->
+# github.com/lukasbjork/Gronabyggnader). Build-kommando och publish-mapp läses härifrån.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Säkerhets- och prestandaheaders för alla sidor.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Långtidscache för statiska assets (Next.js hashar filnamn -> säkert att cacha hårt).
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cacha self-hosted typsnitt hårt.
+[[headers]]
+  for = "/_next/static/media/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Gröna Byggnader">
+  <rect width="64" height="64" rx="14" fill="#1B4332"/>
+  <g transform="translate(32,34)" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M-15 17 H15"/>
+    <path d="M-11 17 V-5 L0 -15 L11 -5 V17"/>
+    <path d="M0 17 C0 5 4 -3 11 -7" stroke="#52B788"/>
+  </g>
+</svg>

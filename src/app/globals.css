@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+ * ───────────────────────────────────────────────────────────────────────────
+ *  FÄRGTEMA — grönt hållbarhetstema (Gröna Byggnader)
+ * ───────────────────────────────────────────────────────────────────────────
+ *  Naturnära, premium och förtroendeingivande. Tokens nedan är valda för god
+ *  WCAG AA-kontrast: mörka gröna toner används för text/knappar, de ljusa
+ *  accenterna (#52B788/#74C69D) ENBART för dekor, bakgrunder och hover – aldrig
+ *  som liten text på vitt.
+ * ───────────────────────────────────────────────────────────────────────────
+ */
+:root {
+  --background: #f6faf7; /* sidbakgrund, svagt grönvit */
+  --surface: #ffffff; /* kort, paneler */
+  --foreground: #1a2421; /* brödtext, hög kontrast */
+  --muted: #5c6b64; /* sekundär text, metadata */
+
+  --brand: #1b4332; /* primär mörkgrön – header, rubriker, primära knappar */
+  --brand-deep: #102a1e; /* mörkast – hover/djup, footerkontrast */
+  --brand-2: #2d6a4f; /* sekundär grön – länkar, ikoner, sekundära ytor */
+  --accent: #52b788; /* frisk grön – highlights, CTA-accent */
+  --accent-light: #74c69d; /* ljus accent – subtila bakgrunder, badges */
+  --brand-soft: #e9f5ee; /* ljus grön bakgrundsyta */
+
+  --border: #e3ede7; /* subtila avgränsningar */
+
+  --radius: 0.85rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-2: var(--brand-2);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-brand-soft: var(--brand-soft);
+
+  --color-border: var(--border);
+
+  /* Typografi: rubriker i Sora, brödtext i Inter (self-hosted via next/font). */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-sora), var(--font-inter), system-ui, sans-serif;
+
+  --radius-card: var(--radius);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Rubriker använder Sora för en distinkt, påkostad känsla. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-sora), var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Tydlig, synlig fokusmarkering för tangentbordsnavigering (WCAG 2.4.7). */
+:focus-visible {
+  outline: 3px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* "Hoppa till innehåll"-länk: dold tills den får fokus. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  background: var(--brand-deep);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  transition: top 0.15s ease-in;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Subtil "lyft"-animation på kort vid hover. */
+.card-hover {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+}
+
+/* Prose-styling för bloggartiklar (Tailwind Typography + våra brandfärger). */
+.prose-brand {
+  --tw-prose-headings: var(--brand-deep);
+  --tw-prose-links: var(--brand-2);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-body: var(--foreground);
+  --tw-prose-quotes: var(--brand);
+  --tw-prose-quote-borders: var(--accent);
+  --tw-prose-bullets: var(--brand-2);
+  --tw-prose-counters: var(--brand-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
