@@ -55,7 +55,7 @@ export default function Header() {
         </nav>
 
         <div className="hidden xl:block">
-          <Button href="/kontakt/">Få offert</Button>
+          <Button href="/offert/">Få offert</Button>
         </div>
 
         {/* Mobil meny-knapp */}

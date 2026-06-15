@@ -1,12 +1,20 @@
-# Netlify-konfiguration för statisk Next.js-export.
-# Repot kopplas i Netlify (Add new site -> Import an existing project -> GitHub ->
-# github.com/lukasbjork/Gronabyggnader). Build-kommando och publish-mapp läses härifrån.
+# Netlify-konfiguration för Next.js på Netlifys runtime (INTE längre statisk export).
+# @netlify/plugin-nextjs bygger serverfunktioner för /api-rutter och dynamiska sidor,
+# men förrenderar/cachar fortfarande statiska sidor så marknadssajten förblir snabb.
+#
+# Miljövariabler (Supabase, Resend, APP_BASE_URL m.fl.) sätts under
+# Site settings -> Environment variables i Netlify – ALDRIG i git. Se README.
 [build]
   command = "npm run build"
-  publish = "out"
+  # Next.js-runtimen publicerar från .next (inte längre out/).
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Officiell Next.js-runtime för Netlify (serverfunktioner, ISR, image-hantering).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # Säkerhets- och prestandaheaders för alla sidor.
 [[headers]]

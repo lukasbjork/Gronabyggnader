@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import PageHeader from "@/components/PageHeader";
 import { fullAddress, site } from "@/config/site";
+import KontaktForm from "./KontaktForm";
 
 export const metadata: Metadata = {
   title: "Kontakt & kostnadsfri offert",
@@ -12,12 +13,12 @@ export const metadata: Metadata = {
 
 /*
  * ───────────────────────────────────────────────────────────────────────────
- *  OM FORMULÄRET (Netlify Forms)
+ *  OM FORMULÄRET
  * ───────────────────────────────────────────────────────────────────────────
- *  Formuläret använder Netlify Forms och skickar inskick till Netlify-dashboarden
- *  + e-post (ingen egen backend krävs). Det är en OFFERTFÖRFRÅGAN – ni återkommer
- *  manuellt. Forms aktiveras automatiskt tack vare data-netlify-attributet.
- *  Ställ in e-postavisering under "Forms" i Netlify-dashboarden.
+ *  Formuläret postar till /api/quote-requests (source="kontakt") och hamnar i
+ *  samma admin-inkorg som offertförfrågningar (/admin). Kunden får ett
+ *  bekräftelsemejl och admin en notis (via Resend). Vill du i stället begära en
+ *  offert med filuppladdning och digital signering – se /offert.
  * ───────────────────────────────────────────────────────────────────────────
  */
 
@@ -45,18 +46,6 @@ const localBusinessLd = {
   openingHours: site.openingHoursSchema,
 };
 
-const inputClass =
-  "mt-1 w-full rounded-lg border border-border bg-surface px-4 py-3 text-foreground focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-2";
-
-const propertyTypes = [
-  "Villa / radhus",
-  "Bostadsrätt",
-  "Bostadsrättsförening (BRF)",
-  "Flerbostadshus / hyresfastighet",
-  "Kommersiell fastighet",
-  "Annat / vet inte",
-];
-
 export default function KontaktPage() {
   return (
     <>
@@ -71,97 +60,19 @@ export default function KontaktPage() {
       />
 
       <section className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
-        {/* Formulär (Netlify Forms) */}
+        {/* Formulär (postar till /api/quote-requests, source="kontakt") */}
         <div>
           <h2 className="text-2xl font-bold text-brand-deep">Skicka en förfrågan</h2>
           <p className="mt-2 text-muted">
-            Fält markerade med <span aria-hidden="true">*</span> är obligatoriska.
+            Fält markerade med <span aria-hidden="true">*</span> är obligatoriska. Vill du bifoga
+            ritningar och signera digitalt?{" "}
+            <a className="font-medium text-brand-2 underline underline-offset-2" href="/offert/">
+              Begär offert här
+            </a>
+            .
           </p>
 
-          <form
-            name="offert"
-            method="POST"
-            action="/tack/"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            className="mt-6 space-y-5"
-          >
-            {/* Krävs av Netlify Forms för att koppla inskick till rätt formulär */}
-            <input type="hidden" name="form-name" value="offert" />
-            {/* Honeypot – dolt för människor, fångar bottar */}
-            <p className="hidden">
-              <label>
-                Fyll inte i detta fält: <input name="bot-field" />
-              </label>
-            </p>
-
-            <div>
-              <label htmlFor="namn" className="block font-medium text-brand-deep">
-                Namn <span aria-hidden="true">*</span>
-              </label>
-              <input id="namn" name="namn" type="text" required autoComplete="name" className={inputClass} />
-            </div>
-
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div>
-                <label htmlFor="epost" className="block font-medium text-brand-deep">
-                  E-post <span aria-hidden="true">*</span>
-                </label>
-                <input id="epost" name="epost" type="email" required autoComplete="email" className={inputClass} />
-              </div>
-              <div>
-                <label htmlFor="telefon" className="block font-medium text-brand-deep">
-                  Telefon <span aria-hidden="true">*</span>
-                </label>
-                <input id="telefon" name="telefon" type="tel" required autoComplete="tel" className={inputClass} />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="fastighetstyp" className="block font-medium text-brand-deep">
-                Fastighetstyp <span aria-hidden="true">*</span>
-              </label>
-              <select id="fastighetstyp" name="fastighetstyp" required defaultValue="" className={inputClass}>
-                <option value="" disabled>
-                  Välj fastighetstyp …
-                </option>
-                {propertyTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="meddelande" className="block font-medium text-brand-deep">
-                Berätta om ditt projekt <span aria-hidden="true">*</span>
-              </label>
-              <textarea
-                id="meddelande"
-                name="meddelande"
-                rows={5}
-                required
-                placeholder="T.ex. höga uppvärmningskostnader, drag från fönster, gammal panna eller en fasad som behöver ses över."
-                className={inputClass}
-              />
-            </div>
-
-            <p className="text-sm text-muted">
-              Genom att skicka godkänner du att vi behandlar dina uppgifter enligt vår{" "}
-              <a className="font-medium text-brand-2 underline underline-offset-2" href="/integritetspolicy/">
-                integritetspolicy
-              </a>
-              .
-            </p>
-
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-base font-semibold text-white transition-colors hover:bg-brand-deep focus-visible:outline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-deep"
-            >
-              Skicka förfrågan
-            </button>
-          </form>
+          <KontaktForm />
         </div>
 
         {/* Kontaktuppgifter + karta */}
